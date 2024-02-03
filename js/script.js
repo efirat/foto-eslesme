@@ -15,21 +15,38 @@ const kartTemplate = `
     </div>
 `;
 
+
+// Array karistirdik.
+function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+    return array;
+}
+
+
+//1-99 Arası rastgele 4 cift sayi iceren array uretir.
 let randomNum = function(){
     let randomArray = [];
     for (let i = 0; i < 8; i++){
-       let randomNumbers = Math.floor(Math.random() * 99);
+        //Cift sayiyi bulanan kadar dondurur
+        let randomNumbers;
+        do {
+            randomNumbers = Math.floor(Math.random() * 99)+1;
+            //Ayni sayinin tekrar eklenmesini engelledik
+            if (randomArray.includes(randomNumbers)) randomNumbers=1
+        } while (randomNumbers % 2 === 1);
+
         randomArray.push(randomNumbers, randomNumbers);
         if (randomArray.length > 6) break;
     }
-    return randomArray
+    return shuffle(randomArray)
 };
+
 
 
 /*
 Görev 2: Bu numaraları 1-99 arası(1 ve 99 dahil) sayılardan rastgele 4 çift oluşturacak şekilde üreten bir fonksiyon yazarak, kod bloğundaki array değerini bu fonksiyondan dönen array ile değiştiren kodları yazın
 */
-const fotoNumaralari = [10, 20, 30, 20, 10, 40, 40, 30];
+const fotoNumaralari = randomNum() //[10, 20, 30, 20, 10, 40, 40, 30];
 
 
 console.log(fotoNumaralari);
@@ -114,6 +131,7 @@ function kartTiklama(olay) {
 
             setTimeout(() => {
                 document.querySelector(".kazandin").remove();
+                location.reload();
             }, 5000);
         }
 
@@ -133,3 +151,6 @@ function kartTiklama(olay) {
         }, 1500);
     }
 }
+
+
+
